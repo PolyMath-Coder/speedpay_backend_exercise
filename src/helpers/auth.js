@@ -30,11 +30,11 @@ const userAuthentication = (req, res, next) => {
 };
 
 const adminAuthorization = (req, res, next) => {
-  if (!req.user || req.user.userRole === 'admin') {
+  if (!req.user || req.user.userRole !== 'admin') {
     res.status(403).json({
       status: 'access denied',
       message:
-        'Oops! Only admin are permitted to view this resource or perform this action...',
+        'Oops! Only admins are permitted to view this resource or perform this action...',
     });
     return;
   }

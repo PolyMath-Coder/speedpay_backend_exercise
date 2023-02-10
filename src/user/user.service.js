@@ -53,6 +53,7 @@ const makeTransfer = async (sender, data) => {
   const isReceiverExist = await User.findOne({
     accountNumber: receiverAccountNumber,
   });
+
   if (!isReceiverExist) {
     throw new ApiError(400, 'This account is non-existent and thus invalid.');
   }
@@ -74,7 +75,7 @@ const makeTransfer = async (sender, data) => {
   });
   const receiverBalance = receiver.accountBalance;
   const creditReceiver = receiverBalance + amountToTransfer;
-  return await User.findOne(
+  return await User.findOneAndUpdate(
     { accountNumber: receiverAccountNumber },
     { accountBalance: creditReceiver },
     { new: true }
